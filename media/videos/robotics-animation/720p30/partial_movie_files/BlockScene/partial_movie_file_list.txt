@@ -1,3 +1,0 @@
-# This file is used internally by FFMPEG.
-file 'file:/Users/sujaygarlanka/Code/etc/robotics-animation/media/videos/robotics-animation/720p30/partial_movie_files/BlockScene/1310802362_646724543_223132457.mp4'
-file 'file:/Users/sujaygarlanka/Code/etc/robotics-animation/media/videos/robotics-animation/720p30/partial_movie_files/BlockScene/2735370252_548731573_1081513390.mp4'

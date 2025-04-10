@@ -1,2 +1,0 @@
-# This file is used internally by FFMPEG.
-file 'file:/Users/sujaygarlanka/Code/etc/robotics-animation/media/videos/robotics-animation/2160p60/partial_movie_files/Gimbal3D/4126814599_548731573_2846423389.mp4'
