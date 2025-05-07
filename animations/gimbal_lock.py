@@ -1,5 +1,4 @@
 from manimlib import *
-from math import radians
 import numpy as np
 from klampt.math import so3
 
