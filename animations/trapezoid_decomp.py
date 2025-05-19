@@ -92,6 +92,12 @@ class TrapezoidDecomp(Scene):
         self._move_sweep_line(intersection_dot, line, edges[2].start)
 
         # Continue
+        self._write_info(
+            """
+            CONTINUE
+            """,
+            {},
+        )
         self._remove_edge_from_L(0.5, edges[1])
         self.wait(0.5)
         self._add_edge_to_L(0.5, edges[2])
@@ -99,6 +105,7 @@ class TrapezoidDecomp(Scene):
         cell_boundaries[prev_cbs[0]].append(cb)
         prev_cbs = [cb]
         self._draw_cell_boundary(cb)
+        self._delete_info()
 
         # Move the line to the next edge
         self._move_sweep_line(intersection_dot, line, edges[15].start)
@@ -129,7 +136,13 @@ class TrapezoidDecomp(Scene):
         # Move the line to the next edge
         self._move_sweep_line(intersection_dot, line, edges[3].start)
 
-        # Continue        
+        # Continue
+        self._write_info(
+            """
+            CONTINUE
+            """,
+            {},
+        )        
         self._remove_edge_from_L(0.5, edges[2])
         self.wait(0.5)
         self._add_edge_to_L(0.5, edges[3])
@@ -137,11 +150,18 @@ class TrapezoidDecomp(Scene):
         cell_boundaries[prev_cbs[0]].append(cb)
         prev_cbs[0] = cb
         self._draw_cell_boundary(cb)
+        self._delete_info()
 
         # Move the line to the next edge
         self._move_sweep_line(intersection_dot, line, edges[16].start)
 
         # Continue
+        self._write_info(
+            """
+            CONTINUE
+            """,
+            {},
+        )
         self._remove_edge_from_L(0.5, edges[15])
         self.wait(0.5)
         self._add_edge_to_L(0.5, edges[16])
@@ -149,11 +169,18 @@ class TrapezoidDecomp(Scene):
         cell_boundaries[prev_cbs[0]].append(cb)
         prev_cbs[0] = cb
         self._draw_cell_boundary(cb)
+        self._delete_info()
 
         # Move the line to the next edge
         self._move_sweep_line(intersection_dot, line, edges[18].start)
 
         # Continue
+        self._write_info(
+            """
+            CONTINUE
+            """,
+            {},
+        )
         self._remove_edge_from_L(0.5, edges[18])
         self.wait(0.5)
         self._add_edge_to_L(0.5, edges[17])
@@ -161,11 +188,18 @@ class TrapezoidDecomp(Scene):
         cell_boundaries[prev_cbs[1]].append(cb)
         prev_cbs[1] = cb
         self._draw_cell_boundary(cb)
+        self._delete_info()
 
         # Move the line to the next edge
         self._move_sweep_line(intersection_dot, line, edges[17].start)
 
         # Continue
+        self._write_info(
+            """
+            CONTINUE
+            """,
+            {},
+        )
         self._remove_edge_from_L(0.5, edges[16], edges[17])
         self.wait(0.5)
         cb = CellBoundary(edges[17].start, edges[3].start[1])
@@ -174,11 +208,18 @@ class TrapezoidDecomp(Scene):
         cell_boundaries[prev_cbs[1]].append(cb2)
         prev_cbs = [cb, cb2]
         self._draw_cell_boundary(cb, cb2)
+        self._delete_info()
 
         # Move the line to the next edge
         self._move_sweep_line(intersection_dot, line, edges[4].start)
 
         # Continue
+        self._write_info(
+            """
+            CONTINUE
+            """,
+            {},
+        )
         self._remove_edge_from_L(0.5, edges[3])
         self.wait(0.5)
         self._add_edge_to_L(0.5, edges[4])
@@ -187,6 +228,7 @@ class TrapezoidDecomp(Scene):
         cell_boundaries[prev_cbs[1]].append(cb)
         prev_cbs = [cb]
         self._draw_cell_boundary(cb)
+        self._delete_info()
 
         # Move the line to the next edge
         self._move_sweep_line(intersection_dot, line, edges[14].start)
@@ -194,7 +236,7 @@ class TrapezoidDecomp(Scene):
         # Continue
         self._write_info(
             """
-            There are multiple vertices at this x-coordinate. This vertex, with
+            CONTINUE: There are multiple vertices at this x-coordinate. This vertex, with
             the lowest y-coordinate is processed first.
             """,
             {
@@ -215,12 +257,25 @@ class TrapezoidDecomp(Scene):
         self._move_sweep_line(intersection_dot, line, edges[11].start)
 
         # Split
+        self._write_info(
+            """
+            SPLIT
+            """,
+            {},
+        )
         self._add_edge_to_L(0.5, edges[10], edges[11])
+        self._delete_info()
 
         # Move the line to the next edge
         self._move_sweep_line(intersection_dot, line, edges[10].start)
 
         # Continue
+        self._write_info(
+            """
+            CONTINUE
+            """,
+            {},
+        )
         self._remove_edge_from_L(0.5, edges[10])
         self.wait(0.5)
         self._add_edge_to_L(0.5, edges[9])
@@ -229,11 +284,18 @@ class TrapezoidDecomp(Scene):
         cell_boundaries[prev_cbs[0]].append(cb)
         prev_cbs[0] = cb
         self._draw_cell_boundary(cb)
+        self._delete_info()
 
         # Move the line to the next edge
         self._move_sweep_line(intersection_dot, line, edges[12].start)
 
         # Continue
+        self._write_info(
+            """
+            CONTINUE
+            """,
+            {},
+        )
         self._remove_edge_from_L(0.5, edges[11])
         self.wait(0.5)
         self._add_edge_to_L(0.5, edges[12])
@@ -242,11 +304,18 @@ class TrapezoidDecomp(Scene):
         cell_boundaries[prev_cbs[1]].append(cb)
         prev_cbs[1] = cb
         self._draw_cell_boundary(cb)
+        self._delete_info()
 
         # Move the line to the next edge
         self._move_sweep_line(intersection_dot, line, edges[5].start)
 
         # Continue
+        self._write_info(
+            """
+            CONTINUE
+            """,
+            {},
+        )
         self._remove_edge_from_L(0.5, edges[4])
         self.wait(0.5)
         self._add_edge_to_L(0.5, edges[5])
@@ -254,6 +323,7 @@ class TrapezoidDecomp(Scene):
         cell_boundaries[prev_cbs[0]].append(cb)
         prev_cbs[0] = cb
         self._draw_cell_boundary(cb)
+        self._delete_info()
 
         # Move the line to the next edge
         self._move_sweep_line(intersection_dot, line, edges[13].start)
@@ -275,6 +345,12 @@ class TrapezoidDecomp(Scene):
         self._move_sweep_line(intersection_dot, line, edges[9].start)
 
         # Continue
+        self._write_info(
+            """
+            CONTINUE
+            """,
+            {},
+        )
         self._remove_edge_from_L(0.5, edges[9])
         self.wait(0.5)
         self._add_edge_to_L(0.5, edges[8])
@@ -282,11 +358,18 @@ class TrapezoidDecomp(Scene):
         cell_boundaries[prev_cbs[0]].append(cb)
         prev_cbs = [cb]
         self._draw_cell_boundary(cb)
+        self._delete_info()
 
         # Move the line to the next edge
         self._move_sweep_line(intersection_dot, line, edges[8].start)
 
         # Continue
+        self._write_info(
+            """
+            CONTINUE
+            """,
+            {},
+        )
         self._remove_edge_from_L(0.5, edges[8])
         self.wait(0.5)
         self._add_edge_to_L(0.5, edges[7])
@@ -294,16 +377,33 @@ class TrapezoidDecomp(Scene):
         cell_boundaries[prev_cbs[0]].append(cb)
         prev_cbs = [cb]
         self._draw_cell_boundary(cb)
+        self._delete_info()
 
         # Move the line to the next edge
         self._move_sweep_line(intersection_dot, line, edges[7].start)
 
         # Continue
+        self._write_info(
+            """
+            CONTINUE
+            """,
+            {},
+        )
         self._remove_edge_from_L(0.5, edges[7])
+        self._delete_info()
         
         # Move the line to the next edge
         self._move_sweep_line(intersection_dot, line, edges[6].start)
+
+        # Continue
+        self._write_info(
+            """
+            CONTINUE
+            """,
+            {},
+        )
         self._remove_edge_from_L(0.5, edges[5])
+        self._delete_info()
 
         self._write_info(
             """

@@ -29,9 +29,6 @@ class Gimbal3D(ThreeDScene):
         texts[1].add_updater(lambda m: m.set_value(pitch.get_value()))
         texts[2].add_updater(lambda m: m.set_value(yaw.get_value()))
 
-        def normalize(v):
-            return v / np.linalg.norm(v)
-
         # Update for all rings
         def update_rings(m):
             diff_angles = np.array([roll.get_value(), pitch.get_value(), yaw.get_value()]) - prev_ring_angles
@@ -63,8 +60,7 @@ class Gimbal3D(ThreeDScene):
 
         # Show gimbal lock
         self.play(ApplyMethod(pitch.increment_value, -math.pi/2), run_time=2, rate_func=linear)
-        self.play(ApplyMethod(roll.increment_value, 2*math.pi), ApplyMethod(yaw.increment_value, 2*math.pi), run_time=4, rate_func=linear)
-
+        self.play(ApplyMethod(roll.increment_value, 2 * math.pi), ApplyMethod(yaw.increment_value, 2 * math.pi), run_time=4, rate_func=linear)
         
     def _create_rings(self):
         # Parameters
