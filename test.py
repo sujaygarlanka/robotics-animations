@@ -225,7 +225,7 @@ class TorusPlot(InteractiveScene):
             else:
                 rotations.append(Rotate(cube, 2*PI, axis=OUT))
 
-        self.play(*rotations)
+        self.play(*rotations, run_time=3)
 
         self.wait(3)
 
