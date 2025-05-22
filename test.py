@@ -207,6 +207,8 @@ class TorusPlot(InteractiveScene):
 
         self.play(FadeIn(*cubes))
 
+        cubes[0].scale(2.0)
+
         # rotations = []
         # # Assign different rotations to cubes
         # for i, cube in enumerate(cubes):
