@@ -268,7 +268,9 @@ class TorusPlot(InteractiveScene):
             large_cube.animate.scale(5).move_to(ORIGIN),
             run_time=1.5
         )
+
         embed()
+        
         print(large_cube.scale_val)
 
         # Show mirroring
