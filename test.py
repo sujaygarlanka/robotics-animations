@@ -229,6 +229,9 @@ class TorusPlot(InteractiveScene):
         self.play(*rotations, run_time=2)
         self.play(*rotations, run_time=2)
 
+        # Mirror the cubes
+        
+
         # Create target arrangement
         target_group = Group(*cubes).copy()
         target_group.arrange(
