@@ -212,7 +212,8 @@ class TorusPlot(InteractiveScene):
         cube_group.arrange_in_grid(
             n_rows=rows,
             n_cols=cols,
-            buff=(1.5, 1.5)  # (horizontal, vertical) spacing
+            h_buff=1.5,
+            v_buff=1.5
         )
 
         self.play(*[FadeIn(cube) for cube in cubes])
