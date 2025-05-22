@@ -219,24 +219,24 @@ class TorusPlot(InteractiveScene):
 
         self.play(*rotations, run_time=3)
 
-        # Move cubes to top in a line
-        top_z = 3  # Position at top of screen
-        spacing = 1.0  # Reduced spacing for smaller cubes
-        new_scale = 0.4  # Scale down the cubes
+        # # Move cubes to top in a line
+        # top_z = 3  # Position at top of screen
+        # spacing = 1.0  # Reduced spacing for smaller cubes
+        # new_scale = 0.4  # Scale down the cubes
         
-        animations = []
-        for i, cube in enumerate(cubes):
-            # Calculate x position in line
-            x = (i - (len(cubes)-1)/2) * spacing
-            # Create animation to move and scale
-            animations.append(
-                AnimationGroup(
-                    cube.animate.move_to(np.array([x, 0, top_z])),
-                    cube.animate.scale(new_scale)
-                )
-            )
+        # animations = []
+        # for i, cube in enumerate(cubes):
+        #     # Calculate x position in line
+        #     x = (i - (len(cubes)-1)/2) * spacing
+        #     # Create animation to move and scale
+        #     animations.append(
+        #         AnimationGroup(
+        #             cube.animate.move_to(np.array([x, 0, top_z])),
+        #             cube.animate.scale(new_scale)
+        #         )
+        #     )
             
-        self.play(*animations, run_time=2)
+        # self.play(*animations, run_time=2)
 
         self.wait(1)
     
