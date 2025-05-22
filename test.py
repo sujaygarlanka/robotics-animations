@@ -251,6 +251,7 @@ class TorusPlot(InteractiveScene):
             direction=RIGHT,
             buff=1.0  # spacing between cubes
         ).scale(0.4)  # scale down the entire group
+
         target_group.move_to([0, 0, 3])  # move to top of screen
         
         # Animate each cube to its target position
@@ -270,7 +271,7 @@ class TorusPlot(InteractiveScene):
         )
 
         embed()
-        
+
         print(large_cube.scale_val)
 
         # Show mirroring
