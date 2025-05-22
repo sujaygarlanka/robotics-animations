@@ -153,13 +153,13 @@ class TorusPlot(InteractiveScene):
         self._show_base_cases()
         
 
-        # # Sphere
-        # sphere = Sphere(radius=1, color=BLUE, opacity=0.2)
+        # Sphere
+        sphere = Sphere(radius=1, color=BLUE, opacity=0.2)
 
-        # # Axes
-        # axes = ThreeDAxes()
-        # axes.set_color(GREY)
-        # self.add(axes)
+        # Axes
+        axes = ThreeDAxes()
+        axes.set_color(GREY)
+        self.add(axes)
 
         # # self.run_marching_cubes(sphere)
         # self.add(sphere)
