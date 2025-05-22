@@ -135,7 +135,7 @@ class TorusPlot(InteractiveScene):
         # Fade out the sphere and the strokes of the cubes
 
         # Set up camera orientation
-        self.camera.frame.reorient(phi_degrees=75, theta_degrees=45)
+        self.camera.frame.reorient(phi_degrees=90, theta_degrees=0)
 
         # Initial orientation
         self.prev_ori_camera = self.camera.frame.get_orientation()
@@ -156,7 +156,7 @@ class TorusPlot(InteractiveScene):
         # # self.run_marching_cubes(sphere)
         # self.add(sphere)
         # self.wait(1)
-        
+
 
     def _animate_different_corners(self):
         cube = Cube(self, scale=3.0)
