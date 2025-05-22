@@ -156,6 +156,7 @@ class TorusPlot(InteractiveScene):
         # # self.run_marching_cubes(sphere)
         # self.add(sphere)
         # self.wait(1)
+        
 
     def _animate_different_corners(self):
         cube = Cube(self, scale=3.0)
