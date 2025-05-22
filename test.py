@@ -208,7 +208,7 @@ class TorusPlot(InteractiveScene):
             cubes.append(cube)
 
         # Method 1: arrange_in_grid
-        cube_group = VGroup(*cubes)
+        cube_group = Group(*cubes)
         cube_group.arrange_in_grid(
             rows=rows,
             cols=cols,
