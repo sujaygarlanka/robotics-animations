@@ -201,7 +201,7 @@ class TorusPlot(InteractiveScene):
         # Show the base cases
         rows = 3
         cols = 5
-        spacing = 2.0
+        spacing = 1.8
 
 
         cubes = []
