@@ -203,20 +203,20 @@ class TorusPlot(InteractiveScene):
         cols = 5
         spacing = 1.5
 
-        cubes = []
-        for i, cube in enumerate(self.lookup_table):
-            cubes.append(cube)
+        # cubes = []
+        # for i, cube in enumerate(self.lookup_table):
+        #     cubes.append(cube)
 
-        # Method 1: arrange_in_grid
-        cube_group = Group(*cubes)
-        cube_group.arrange_in_grid(
-            n_rows=rows,
-            n_cols=cols,
-            h_buff=1.5,
-            v_buff=1.5
-        )
+        # # Method 1: arrange_in_grid
+        # cube_group = Group(*cubes)
+        # cube_group.arrange_in_grid(
+        #     n_rows=rows,
+        #     n_cols=cols,
+        #     h_buff=1.5,
+        #     v_buff=1.5
+        # )
 
-        self.play(*[FadeIn(cube) for cube in cubes])
+        # self.play(*[FadeIn(cube) for cube in cubes])
 
         cubes = []
         # Arrange manually
