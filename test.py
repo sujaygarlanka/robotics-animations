@@ -220,12 +220,13 @@ class TorusPlot(InteractiveScene):
         # Assign different rotations to cubes
         for i, cube in enumerate(cubes):
             if i % 3 == 0:
-                rotations.append(Rotate(cube, 2*PI, axis=RIGHT))
+                rotations.append(Rotate(cube, PI, axis=RIGHT))
             elif i % 3 == 1:
-                rotations.append(Rotate(cube, 2*PI, axis=UP))
+                rotations.append(Rotate(cube, PI, axis=UP))
             else:
-                rotations.append(Rotate(cube, 2*PI, axis=OUT))
+                rotations.append(Rotate(cube, PI, axis=OUT))
 
+        self.play(*rotations, run_time=3)
         self.play(*rotations, run_time=3)
 
         # # Move cubes to top in a line
