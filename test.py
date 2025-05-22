@@ -68,14 +68,15 @@ class Cube(Group):
             self.edges.append(edge)
             self.add(edge)
 
-    def clear_vertices(self, animation=None):
+    def clear_vertices(self, animation=False):
         # Clear previous vertices
+        if animation:
+            self.
+        else:
         for dot in self.vertices:
             self.remove(dot)
-        if animation is not None:
-            self.scene.play(*[animation(dot) for dot in self.vertices])
-        self.vertices = []
-        self.vertex_idx = []
+            self.vertices = []
+            self.vertex_idx = []
 
     def add_vertices(self, vertex_idx, animation=False):
         self.vertex_idx = vertex_idx
