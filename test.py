@@ -229,7 +229,7 @@ class TorusPlot(InteractiveScene):
         self.play(*rotations, run_time=2)
 
         # Mirror the cubes
-        for cube in cubes:
+        # for cube in cubes:
 
         # Create target arrangement
         target_group = Group(*cubes).copy()
