@@ -192,8 +192,7 @@ class TorusPlot(InteractiveScene):
             [0, 1, 5, 6],
         ]
         for combo in combos:
-            v = cube.clear_vertices(animation=True)
-            self.play(*[FadeOut(dot) for dot in v])
+            cube.clear_vertices(animation=False)
             cube.add_vertices(combo)
             self.wait(1)
 
