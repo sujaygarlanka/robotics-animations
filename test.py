@@ -268,6 +268,7 @@ class TorusPlot(InteractiveScene):
             large_cube.animate.scale(5).move_to(ORIGIN),
             run_time=1.5
         )
+        print(large_cube.scale_val)
 
         # Show mirroring
         mirror_idx = {0, 1, 2, 3, 4, 5, 6, 7} - set(large_cube.vertex_idx)
