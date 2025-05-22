@@ -218,17 +218,17 @@ class TorusPlot(InteractiveScene):
 
         self.play(*[FadeIn(cube) for cube in cubes])
 
-        # cubes = []
-        # # Arrange manually
-        # for i, cube in enumerate(self.lookup_table):
-        #     row = i // cols
-        #     col = i % cols
-        #     x = (col - (cols - 1)/2) * spacing
-        #     z = - (row - (rows - 1)/2) * spacing
-        #     cube.move_to(np.array([x, 0, z]))
-        #     cubes.append(cube)
+        cubes = []
+        # Arrange manually
+        for i, cube in enumerate(self.lookup_table):
+            row = i // cols
+            col = i % cols
+            x = (col - (cols - 1)/2) * spacing
+            z = - (row - (rows - 1)/2) * spacing
+            cube.move_to(np.array([x, 0, z]))
+            cubes.append(cube)
 
-        # self.play(*[FadeIn(cube) for cube in cubes])
+        self.play(*[FadeIn(cube) for cube in cubes])
         
         # # First animation - rotations
         # rotations = []
