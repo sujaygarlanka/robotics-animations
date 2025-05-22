@@ -177,6 +177,7 @@ class TorusPlot(InteractiveScene):
         def rotate_cube(mob, dt):
             mob.rotate(PI/4 * dt, axis=OUT)  # rotate around z-axis
             mob.rotation_frame = ((PI/4 * dt) % (2 * PI), OUT)
+        
         # Add the updater
         cube.add_updater(rotate_cube)
 
