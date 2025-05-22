@@ -103,7 +103,7 @@ class Cube(Group):
                 triangle_points.append((v1 + v2)/2.0)
             triangle = Polygon(triangle_points[0], triangle_points[1], triangle_points[2])
             triangle.set_fill(YELLOW, opacity=1.0)
-            triangle.set_stroke(BLACK, width=1)
+            triangle.set_stroke(BLACK, width=1 * self.scale_val)
             self.triangles.append(triangle)
             self.add(triangle)
 
@@ -119,6 +119,14 @@ class Cube(Group):
         super().rotate(angle, axis=axis, **kwargs)
         R = so3.rotation(axis, angle)
         self.rotation_matrix = so3.mul(R, self.rotation_matrix)
+
+    def scale(self, scale):
+        s
+        self.scale_val = scale
+        for edge in self.edges:
+            edge.set_stroke_width(1.0 * self.scale_val)
+        for triangle in self.triangles:
+            triangle.set_stroke(BLACK, width=1)
         
 class TorusPlot(InteractiveScene):
     def construct(self):
