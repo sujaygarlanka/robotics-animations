@@ -225,9 +225,7 @@ class TorusPlot(InteractiveScene):
             else:
                 rotations.append(Rotate(cube, 2*PI, axis=OUT))
 
-        # Add updaters to cubes
-        for cube, rotation in zip(cubes, rotations):
-            cube.add_updater(rotation)
+        self.play(*rotations)
 
         self.wait(3)
 
