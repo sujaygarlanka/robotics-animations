@@ -90,8 +90,8 @@ class Cube(Group):
             self.vertices.append(dot)
             self.add(dot)
 
-        if animation is not None:
-            self.scene.play(*[animation(dot) for dot in self.vertices])
+        # if animation is not None:
+        #     self.scene.play(*[animation(dot) for dot in self.vertices])
 
     def add_triangles(self, triangles):
         for t in triangles:
