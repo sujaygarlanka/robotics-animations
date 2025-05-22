@@ -1,5 +1,7 @@
 from manimlib import *
+from klampt.math import so3
 import copy
+
 
 manim_config.camera.background_color = WHITE
 
@@ -22,7 +24,7 @@ class Cube(Group):
     #              |/_____________________|/
     #              v0         e0          v1
 
-    CUBE_VERTICES = [
+    CUBE_VERTICES = np.array([
         [-0.5, -0.5, -0.5],  # 0
         [ 0.5, -0.5, -0.5],  # 1
         [ 0.5,  0.5, -0.5],  # 2
@@ -31,7 +33,7 @@ class Cube(Group):
         [ 0.5, -0.5,  0.5],  # 5
         [ 0.5,  0.5,  0.5],  # 6
         [-0.5,  0.5,  0.5]   # 7
-    ]
+    ])
 
     # Edge → (start corner index, end corner index)
     CUBE_EDGES = [
@@ -40,62 +42,84 @@ class Cube(Group):
         (0, 4), (1, 5), (2, 6), (3, 7)   # verticals
     ]
 
-    def __init__(self, vertices=[], triangles=[]):
+    def __init__(self, scene, scale=1.0, vertex_idx=[], triangles=[]):
         super().__init__()
+        self.scene = scene
         self.edges = []
         self.vertices = []
+        self.vertex_idx = []
+        self.scale_val = scale
+        self.rotation_matrix = so3.identity()
+
         self.triangles = []
         self.create_cube()
-        self.update_vertices(vertices)
-        self.update_triangles(triangles)
+        self.add_vertices(vertex_idx)
+        self.add_triangles(triangles)
 
     def create_cube(self):
         # Draw cube edges
         for i, j in Cube.CUBE_EDGES:
             edge = Line(
-                np.array(Cube.CUBE_VERTICES[i]),
-                np.array(Cube.CUBE_VERTICES[j]),
+                Cube.CUBE_VERTICES[i] * self.scale_val,
+                Cube.CUBE_VERTICES[j] * self.scale_val,
                 color=BLACK,
-                stroke_width=1.0,
+                stroke_width=1.0 * self.scale_val,
             )
             self.edges.append(edge)
             self.add(edge)
 
-    def update_vertices(self, vertices):
+    def clear_vertices(self, animation=None):
         # Clear previous vertices
         for dot in self.vertices:
             self.remove(dot)
+        if animation is not None:
+            self.scene.play(*[animation(dot) for dot in self.vertices])
         self.vertices = []
+        self.vertex_idx = []
+
+    def add_vertices(self, vertex_idx, animation=None):
+        self.vertex_idx = vertex_idx
 
         # Visualize corners
         for idx, pos in enumerate(Cube.CUBE_VERTICES):
-            o = 1.0 if idx in vertices else 0.0
-            dot = Sphere(radius=0.05, opacity=o, color=RED)
-            dot.move_to(np.array(pos))
-            # if idx in vertices:
-            #     dot.set_color(RED)
-            # dot.set_fill(RED, opacity=opacity)
+            o = 1.0 if idx in vertex_idx else 0.0
+            r = 0.05 * self.scale_val
+            dot = Sphere(radius=r, opacity=o, color="#62AFE0")
+            # Get the rotation frame of the group
+            dot.move_to(np.array(so3.apply(self.rotation_matrix, pos)) * self.scale_val)
             self.vertices.append(dot)
             self.add(dot)
 
-    def update_triangles(self, triangles):
-        # Clear previous triangles
-        for triangle in self.triangles:
-            self.remove(triangle)
-        self.triangles = []
+        if animation is not None:
+            self.scene.play(*[animation(dot) for dot in self.vertices])
 
+    def add_triangles(self, triangles):
         for t in triangles:
             triangle_points = []
             for edge in t:
                 e = Cube.CUBE_EDGES[edge]
-                v1 = Cube.CUBE_VERTICES[e[0]]
-                v2 = Cube.CUBE_VERTICES[e[1]]
+                v1 = Cube.CUBE_VERTICES[e[0]] * self.scale_val
+                v2 = Cube.CUBE_VERTICES[e[1]] * self.scale_val
                 triangle_points.append((v1 + v2)/2.0)
             triangle = Polygon(triangle_points[0], triangle_points[1], triangle_points[2])
             triangle.set_fill(YELLOW, opacity=1.0)
             triangle.set_stroke(BLACK, width=1)
+            self.triangles.append(triangle)
             self.add(triangle)
 
+    def get_vertex_locations(self):
+        return Cube.CUBE_VERTICES[self.vertex_idx]
+    
+    def rotate(
+        self,
+        angle,
+        axis = OUT,
+        **kwargs
+    ):
+        super().rotate(angle, axis=axis, **kwargs)
+        R = so3.rotation(axis, angle)
+        self.rotation_matrix = so3.mul(R, self.rotation_matrix)
+        
 class TorusPlot(InteractiveScene):
     def construct(self):
         # Animation script
@@ -113,37 +137,87 @@ class TorusPlot(InteractiveScene):
         # Set up camera orientation
         self.camera.frame.reorient(phi_degrees=75, theta_degrees=45)
 
-        # # Add a coordinate frame to the scene
-        # coord_frame = self.create_coordinate_frame(
-        #     origin=np.array([-4, -3, -3]),  # Position in bottom left corner
-        #     axis_length=1.5,
-        #     axis_thickness=0.05
-        # )
-        # self.add(coord_frame)
-
-        # # Make the text labels face the camera
-        # for label in [coord_frame[3], coord_frame[4], coord_frame[5]]:  # The text labels
-        #     self.add(label)
+        # Initial orientation
+        self.prev_ori_camera = self.camera.frame.get_orientation()
 
         self.lookup_table = self.create_lookup_table()
+        # self._animate_different_corners()
+        self._show_base_cases()
 
+        # # Sphere
+        # sphere = Sphere(radius=1, color=BLUE, opacity=0.2)
 
-        # Sphere
-        sphere = Sphere(radius=1, color=BLUE, opacity=0.2)
+        # # Axes
+        # axes = ThreeDAxes()
+        # axes.set_color(GREY)
+        # self.add(axes)
 
-        # Axes
-        axes = ThreeDAxes()
-        axes.set_color(GREY)
-        self.add(axes)
+        # # self.run_marching_cubes(sphere)
+        # self.add(sphere)
+        # self.wait(1)
 
-        self.run_marching_cubes(sphere)
-        self.add(sphere)
+    def _animate_different_corners(self):
+        cube = Cube(self, scale=3.0)
+        self.add(cube)
+
+        # Define an updater function
+        def rotate_cube(mob, dt):
+            mob.rotate(PI/4 * dt, axis=OUT)  # rotate around z-axis
+            mob.rotation_frame = ((PI/4 * dt) % (2 * PI), OUT)
+        # Add the updater
+        cube.add_updater(rotate_cube)
+
+        combos = [
+            [0, 1, 2, 3],
+            [0, 3, 4, 7],
+            [0],
+            [0, 3, 5, 6],
+            [0, 1, 2],
+            [0, 5],
+            [0, 1, 2, 4],
+            [0, 1, 5, 6],
+        ]
+        for combo in combos:
+            cube.clear_vertices()
+            cube.add_vertices(combo)
+            self.wait(1)
+
+        # Remove the updater
+        cube.remove_updater(rotate_cube)
+        # Fade out the cube
+        self.play(FadeOut(cube), run_time=1)
+
+    def _show_base_cases(self):
+        # Show the base cases
+        rows = 3
+        cols = 5
+        spacing = 1.5
+
+        def billboard(mob):
+            # Get camera's orientation and apply inverse to the label
+            cam = self.camera.frame
+            # Rotate the label to negate the camera rotation
+            mob.set_quat(cam.get_quat().conjugate())
+
+        # Arrange manually
+        for i, cube in enumerate(self.lookup_table):
+            row = i // cols
+            col = i % cols
+            x = (col - (cols - 1)/2) * spacing
+            z = - (row - (rows - 1)/2) * spacing
+            cube.move_to(np.array([x, 0, z]))
+            cube.add_updater(billboard)
+            self.add(cube)
+
+        # Add all dots to the scene
+        # self.add(cube)
+
         self.wait(1)
     
     def run_marching_cubes(self, shape):
-        self.scale = 0.1
+        self.scale = 0.5
         self.shape = shape
-        scale = 0.1
+        scale = 0.5
         
         # Create a 3D grid of points
         x = np.arange(-1, 2, scale)
@@ -151,33 +225,7 @@ class TorusPlot(InteractiveScene):
         z = np.arange(-1, 2, scale)
         X, Y, Z = np.meshgrid(x, y, z)
 
-        # vertex_locations = np.array([
-        #     [-0.5, -0.5, -0.5],  # 0
-        #     [ 0.5, -0.5, -0.5],  # 1
-        #     [ 0.5,  0.5, -0.5],  # 2
-        #     [-0.5,  0.5, -0.5],  # 3
-        #     [-0.5, -0.5,  0.5],  # 4
-        #     [ 0.5, -0.5,  0.5],  # 5
-        #     [ 0.5,  0.5,  0.5],  # 6
-        #     [-0.5,  0.5,  0.5]   # 7
-        # ])
-
-        # vertex_locations_scaled = vertex_locations * scale
-
-        # sp = [2.0, -1.0, -1.0]
-        # vertices = []
-        # for i, v in enumerate(vertex_locations_scaled):
-        #     if ((sp[0] + v[0])**2 + (sp[1] + v[1])**2 + (sp[2] + v[2])**2)**0.5 < shape.radius:
-        #         vertices.append(tuple(vertex_locations[i]))
-
-        # m_cube, axis, angle = self.find_matching_cube(vertices)
-        # # self.add(m_cube)
-        # m_cube = m_cube.scale(scale) 
-        # # m_cube.rotate(angle, axis=axis)
-        # m_cube.move_to(np.array([sp[0], sp[1], sp[2]]))
-        # self.add(m_cube)
-        # self.play(Rotate(m_cube, angle=angle, axis=axis), run_time=2)
-        # print(axis, angle)
+        self._run_marching_cubes(1, 0, 0)
 
         # for i in range(X.shape[0]):
         #     print(f"i: {i}")
@@ -202,12 +250,12 @@ class TorusPlot(InteractiveScene):
         #             self.add(matching_cube)
         # print(X, Y, Z)
         # 2.4, -1, 2.4
-        for i in range(X.shape[0]):
-            print(f"i: {i}")
-            for j in range(X.shape[1]):
-                for k in range(X.shape[2]):
-                    # Check if the point is inside the sphere
-                    self._run_marching_cubes(X[i, j, k], Y[i, j, k], Z[i, j, k])
+        # for i in range(X.shape[0]):
+        #     print(f"i: {i}")
+        #     for j in range(X.shape[1]):
+        #         for k in range(X.shape[2]):
+        #             # Check if the point is inside the sphere
+        #             self._run_marching_cubes(X[i, j, k], Y[i, j, k], Z[i, j, k])
 
     def _run_marching_cubes(self, x, y, z):
         scale = self.scale
@@ -241,38 +289,7 @@ class TorusPlot(InteractiveScene):
         matching_cube.move_to(np.array([x, y, z]))
         self.add(matching_cube)
     
-    def create_coordinate_frame(self, origin=ORIGIN, axis_length=1.0, axis_thickness=0.05):
-        """Create a 3D coordinate frame with X, Y, and Z axes."""
-        x_axis = Cylinder(
-            radius=axis_thickness,
-            height=axis_length,
-            axis=np.array([axis_length, 0, 0]),
-            color=RED,
-        )
-        
-        y_axis = Cylinder(
-            radius=axis_thickness,
-            height=axis_length,
-            axis=np.array([0, axis_length, 0]),
-            color=GREEN,
-        )
-        
-        z_axis = Cylinder(
-            radius=axis_thickness,
-            height=axis_length,
-            axis=np.array([0, 0, axis_length]),
-            color=BLUE,
-        )
-        
-        # Labels
-        x_label = Text("X", color=RED).scale(0.5).next_to(x_axis.get_end(), RIGHT, buff=0.1)
-        y_label = Text("Y", color=GREEN).scale(0.5).next_to(y_axis.get_end(), UP, buff=0.1)
-        z_label = Text("Z", color=BLUE).scale(0.5).next_to(z_axis.get_end(), OUT, buff=0.1)
-        
-        # Group all elements
-        frame = Group(x_axis, y_axis, z_axis, x_label, y_label, z_label)
-        return frame
-    
+
     def find_matching_cube(self, vertices):
         # 24 possible rotations
         cube_rotations = [
@@ -315,9 +332,9 @@ class TorusPlot(InteractiveScene):
 
 
         # Find the cube in the lookup table that matches the given vertices
-        for cube, cubeVs in self.lookup_table:
+        for cube in self.lookup_table:
             for axis, angle in cube_rotations:
-                rotated_cubeVs = self.rotate_points(cubeVs, axis, angle)
+                rotated_cubeVs = self.rotate_points(cube.get_vertex_locations(), axis, angle)
                 if set(vertices) == set(rotated_cubeVs):
                     return (copy.deepcopy(cube), axis, angle)
 
@@ -326,18 +343,6 @@ class TorusPlot(InteractiveScene):
         return [tuple(np.round(matrix.dot(p), 2)) for p in points]
 
     def create_lookup_table(self):
-        # vertex locations for a cube center at origin and a side length of 1
-        vertexLocations = [
-            [-0.5, -0.5, -0.5],  # 0
-            [ 0.5, -0.5, -0.5],  # 1
-            [ 0.5,  0.5, -0.5],  # 2
-            [-0.5,  0.5, -0.5],  # 3
-            [-0.5, -0.5,  0.5],  # 4
-            [ 0.5, -0.5,  0.5],  # 5
-            [ 0.5,  0.5,  0.5],  # 6
-            [-0.5,  0.5,  0.5]   # 7
-        ]
-
         baseCubes = [
             {
                 "vertices": [0, 2, 3, 6],
@@ -452,97 +457,12 @@ class TorusPlot(InteractiveScene):
                 ]
             },
             {
-                "vertices": [0, 1, 2, 3, 4, 5, 6, 7],
-                "triangles":[]
-            },
-            {
                 "vertices": [],
                 "triangles":[]
             },
         ]
         table = []
         for c in baseCubes:
-            cube = self.create_cube(c["vertices"], c["triangles"])
-            cubeVs = []
-            for v in c["vertices"]:
-                cubeVs.append(tuple(vertexLocations[v]))
-            table.append((cube, cubeVs))
+            cube = Cube(self, 1.0, c["vertices"], c["triangles"])
+            table.append(cube)
         return table
-
-    # def create_cube(self, vertices, triangles):
-    #     # https://sketchfab.com/3d-models/15-cases-marching-cubes-representation-78927bfd96694fccbc064bb5fe820f3d
-    #     # https://www.cs.carleton.edu/cs_comps/0405/shape/marching_cubes.html
-    #     #                 v7_______e6_____________v6
-    #     #                  /|                    /|
-    #     #                 / |                   / |
-    #     #              e7/  |                e5/  |
-    #     #               /___|______e4_________/   |
-    #     #            v4|    |                 |v5 |e10
-    #     #              |    |                 |   |
-    #     #              |    |e11              |e9 |
-    #     #            e8|    |                 |   |
-    #     #              |    |_________________|___|
-    #     #              |   / v3      e2       |   /v2
-    #     #              |  /                   |  /
-    #     #              | /e3                  | /e1
-    #     #              |/_____________________|/
-    #     #              v0         e0          v1
-            
-
-    #     # Cube corners (0–7) in 3D space
-    #     CUBE_VERTICES = [
-    #         np.array([0, 0, 0]),  # 0
-    #         np.array([1, 0, 0]),  # 1
-    #         np.array([1, 1, 0]),  # 2
-    #         np.array([0, 1, 0]),  # 3
-    #         np.array([0, 0, 1]),  # 4
-    #         np.array([1, 0, 1]),  # 5
-    #         np.array([1, 1, 1]),  # 6
-    #         np.array([0, 1, 1]),  # 7
-    #     ]
-
-    #     # Edge → (start corner index, end corner index)
-    #     CUBE_EDGES = [
-    #         (0, 1), (1, 2), (2, 3), (3, 0),  # bottom face
-    #         (4, 5), (5, 6), (6, 7), (7, 4),  # top face
-    #         (0, 4), (1, 5), (2, 6), (3, 7)   # verticals
-    #     ]
-
-    #     cube = Group()
-
-    #     # Draw cube edges
-    #     for i, j in CUBE_EDGES:
-    #         edge = Line(
-    #             np.array(CUBE_VERTICES[i]),
-    #             np.array(CUBE_VERTICES[j]),
-    #             color=BLACK,
-    #             stroke_width=1.0,
-    #         )
-    #         cube.add(edge)
-
-    #     # Visualize corners
-    #     for idx, pos in enumerate(CUBE_VERTICES):
-    #         o = 1.0 if idx in vertices else 0.0
-    #         dot = Sphere(radius=0.05, opacity=o, color=RED)
-    #         dot.move_to(np.array(pos))
-    #         # if idx in vertices:
-    #         #     dot.set_color(RED)
-    #         # dot.set_fill(RED, opacity=opacity)
-    #         cube.add(dot)
-
-    #     # Polygon faces
-    #     for t in triangles:
-    #         triangle_points = []
-    #         for edge in t:
-    #             e = CUBE_EDGES[edge]
-    #             v1 = CUBE_VERTICES[e[0]]
-    #             v2 = CUBE_VERTICES[e[1]]
-    #             triangle_points.append((v1 + v2)/2.0)
-    #         triangle = Polygon(triangle_points[0], triangle_points[1], triangle_points[2])
-    #         triangle.set_fill(YELLOW, opacity=1.0)
-    #         triangle.set_stroke(BLACK, width=1)
-    #         cube.add(triangle)
-    #     # cube.rotate(PI, axis=UP)
-    #     # self.add(cube)
-
-    #     return cube
