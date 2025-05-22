@@ -91,8 +91,7 @@ class Cube(Group):
             if not animation:
                 self.add(dot)
 
-        # if animation is not None:
-        #     self.scene.play(*[animation(dot) for dot in self.vertices])
+        return self.vertices
 
     def add_triangles(self, triangles):
         for t in triangles:
