@@ -197,6 +197,7 @@ class TorusPlot(InteractiveScene):
 
         # Remove the updater
         cube.remove_updater(rotate_cube)
+        
         # Fade out the cube
         self.play(FadeOut(cube), run_time=1)
 
