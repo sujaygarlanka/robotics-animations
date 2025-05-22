@@ -197,7 +197,7 @@ class TorusPlot(InteractiveScene):
 
         # Remove the updater
         cube.remove_updater(rotate_cube)
-        
+
         # Fade out the cube
         self.play(FadeOut(cube), run_time=1)
 
@@ -219,18 +219,18 @@ class TorusPlot(InteractiveScene):
 
         self.play(*[FadeIn(cube) for cube in cubes])
         
-        # First animation - rotations
-        rotations = []
-        for i, cube in enumerate(cubes):
-            if i % 3 == 0:
-                rotations.append(Rotate(cube, PI, axis=RIGHT))
-            elif i % 3 == 1:
-                rotations.append(Rotate(cube, PI, axis=UP))
-            else:
-                rotations.append(Rotate(cube, PI, axis=OUT))
+        # # First animation - rotations
+        # rotations = []
+        # for i, cube in enumerate(cubes):
+        #     if i % 3 == 0:
+        #         rotations.append(Rotate(cube, PI, axis=RIGHT))
+        #     elif i % 3 == 1:
+        #         rotations.append(Rotate(cube, PI, axis=UP))
+        #     else:
+        #         rotations.append(Rotate(cube, PI, axis=OUT))
 
-        self.play(*rotations, run_time=2)
-        self.play(*rotations, run_time=2)
+        # self.play(*rotations, run_time=2)
+        # self.play(*rotations, run_time=2)
 
         # Mirror the cubes
         vertices_to_fade_out = []
