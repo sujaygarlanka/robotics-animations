@@ -233,7 +233,18 @@ class TorusPlot(InteractiveScene):
         self.play(*rotations, run_time=2)
 
         # Mirror the cubes
-        # for cube in cubes:
+        vertices_to_fade_out = []
+        vertices_to_fade_in = []
+        for cube in cubes:
+            mirror_idx = set(0, 1, 2, 3, 4, 5, 6, 7) - set(cube.vertex_idx)
+            v = cube.clear_vertices(animation=True)
+            vertices_to_fade_out.extend(v)
+            v = cube.add_vertices(mirror_idx, animation=True)
+            vertices_to_fade_in.extend(v)
+
+        self.play(*[FadeOut(dot) for dot in vertices_to_fade_out])
+        self.play(*[FadeIn(dot) for dot in vertices_to_fade_in])
+
 
         # Create target arrangement
         target_group = Group(*cubes).copy()
