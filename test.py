@@ -207,6 +207,34 @@ class TorusPlot(InteractiveScene):
 
         self.play(FadeIn(*cubes))
 
+        # Define updater functions for different rotations
+        def rotate_x(mob, dt):
+            mob.rotate(PI/4 * dt, axis=RIGHT)
+        def rotate_y(mob, dt):
+            mob.rotate(PI/4 * dt, axis=UP) 
+        def rotate_z(mob, dt):
+            mob.rotate(PI/4 * dt, axis=OUT)
+
+        rotations = []
+        # Assign different rotations to cubes
+        for i, cube in enumerate(cubes):
+            if i % 3 == 0:
+                rotations.append(Rotate(cube, 2*PI, axis=RIGHT))
+            elif i % 3 == 1:
+                rotations.append(Rotate(cube, 2*PI, axis=UP))
+            else:
+                rotations.append(Rotate(cube, 2*PI, axis=OUT))
+
+        # Add updaters to cubes
+        for cube, rotation in zip(cubes, rotations):
+            cube.add_updater(rotation)
+
+        self.wait(3)
+
+        # Remove all updaters
+        for cube in cubes:
+            cube.clear_updaters()
+
         self.wait(1)
     
     def run_marching_cubes(self, shape):
