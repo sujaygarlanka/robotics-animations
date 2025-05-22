@@ -226,8 +226,8 @@ class TorusPlot(InteractiveScene):
             else:
                 rotations.append(Rotate(cube, PI, axis=OUT))
 
-        self.play(*rotations, run_time=3)
-        self.play(*rotations, run_time=3)
+        self.play(*rotations, run_time=2)
+        self.play(*rotations, run_time=2)
 
         # # Move cubes to top in a line
         # top_z = 3  # Position at top of screen
