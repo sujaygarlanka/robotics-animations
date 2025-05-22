@@ -126,11 +126,14 @@ class Cube(Group):
 
     def scale(self, scale):
         super().scale(scale)
-        self.scale_val *= scale
+        self._scale(scale)
         for edge in self.edges:
             edge.set_stroke(BLACK, width=1.0 * self.scale_val)
         for triangle in self.triangles:
             triangle.set_stroke(BLACK, width=1)
+
+    def _scale(self, scale):
+        self.scale_val *= scale
         
 class TorusPlot(InteractiveScene):
     def construct(self):
