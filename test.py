@@ -262,6 +262,8 @@ class TorusPlot(InteractiveScene):
             run_time=2
         )
 
+        
+
         self.wait(1)
     
     def run_marching_cubes(self, shape):
