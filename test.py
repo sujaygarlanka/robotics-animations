@@ -72,8 +72,8 @@ class Cube(Group):
         # Clear previous vertices
         if animation:
             vertices = self.vertices
-            # for dot in self.vertices:
-            #     self.remove(dot)
+            for dot in self.vertices:
+                self.remove(dot)
             self.vertices = []
             self.vertex_idx = []
             return vertices
