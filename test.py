@@ -149,7 +149,7 @@ class TorusPlot(InteractiveScene):
         self.prev_ori_camera = self.camera.frame.get_orientation()
 
         self.lookup_table = self.create_lookup_table()
-        # self._animate_different_corners()
+        self._animate_different_corners()
         self._show_base_cases()
         
 
