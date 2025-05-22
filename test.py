@@ -245,7 +245,6 @@ class TorusPlot(InteractiveScene):
         self.play(*[FadeOut(dot) for dot in vertices_to_fade_out])
         self.play(*[FadeIn(dot) for dot in vertices_to_fade_in])
 
-
         # Create target arrangement
         target_group = Group(*cubes).copy()
         target_group.arrange(
