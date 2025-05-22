@@ -203,7 +203,6 @@ class TorusPlot(InteractiveScene):
         cols = 5
         spacing = 1.8
 
-
         cubes = []
         # Arrange manually
         for i, cube in enumerate(self.lookup_table):
