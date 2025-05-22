@@ -244,7 +244,7 @@ class TorusPlot(InteractiveScene):
         # self.play(*rotations, run_time=2)
 
         # Create target arrangement
-        target_group = VGroup(*cubes).copy()
+        target_group = Group(*cubes).copy()
         target_group.arrange(
             direction=RIGHT,
             buff=1.0  # spacing between cubes
