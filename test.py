@@ -278,7 +278,7 @@ class TorusPlot(InteractiveScene):
         )
         large_cube._scale(5)
 
-        embed()
+        # embed()
 
         print(large_cube.scale_val)
 
