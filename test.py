@@ -75,6 +75,7 @@ class Cube(Group):
         else:
             for dot in self.vertices:
                 self.scene.remove(dot)
+                self.remove(dot)
             self.vertices = []
             self.vertex_idx = []
 
