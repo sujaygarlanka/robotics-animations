@@ -189,7 +189,7 @@ class TorusPlot(InteractiveScene):
         ]
         for combo in combos:
             cube.clear_vertices()
-            cube.add_vertices(combo)
+            cube.add_vertices(combo, FadeIn)
             self.wait(1)
 
         # Remove the updater
