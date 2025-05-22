@@ -205,7 +205,7 @@ class TorusPlot(InteractiveScene):
             cube.move_to(np.array([x, 0, z]))
             cubes.append(cube)
 
-        self.play(FadeIn(*cubes))
+        self.play(*[FadeIn(cube) for cube in cubes])
 
         cubes[0].scale(2.0)
 
