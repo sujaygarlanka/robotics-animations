@@ -182,13 +182,13 @@ class TorusPlot(InteractiveScene):
         cube.add_updater(rotate_cube)
         combos = [
             [0, 1, 2, 3],
-            [0, 3, 4, 7],
-            [0],
-            [0, 3, 5, 6],
-            [0, 1, 2],
-            [0, 5],
-            [0, 1, 2, 4],
-            [0, 1, 5, 6],
+            # [0, 3, 4, 7],
+            # [0],
+            # [0, 3, 5, 6],
+            # [0, 1, 2],
+            # [0, 5],
+            # [0, 1, 2, 4],
+            # [0, 1, 5, 6],
         ]
         for combo in combos:
             cube.clear_vertices(animation=False)
