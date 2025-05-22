@@ -180,7 +180,6 @@ class TorusPlot(InteractiveScene):
         
         # Add the updater
         cube.add_updater(rotate_cube)
-
         combos = [
             [0, 1, 2, 3],
             [0, 3, 4, 7],
