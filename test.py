@@ -227,12 +227,6 @@ class TorusPlot(InteractiveScene):
 
         self.play(*rotations, run_time=3)
 
-        self.wait(3)
-
-        # Remove all updaters
-        for cube in cubes:
-            cube.clear_updaters()
-
         self.wait(1)
     
     def run_marching_cubes(self, shape):
