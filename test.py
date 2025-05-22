@@ -210,8 +210,8 @@ class TorusPlot(InteractiveScene):
         # Method 1: arrange_in_grid
         cube_group = Group(*cubes)
         cube_group.arrange_in_grid(
-            rows=rows,
-            cols=cols,
+            n_rows=rows,
+            n_cols=cols,
             buff=(1.5, 1.5)  # (horizontal, vertical) spacing
         )
 
