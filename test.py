@@ -214,9 +214,6 @@ class TorusPlot(InteractiveScene):
             cubes.append(cube)
 
         self.play(*[FadeIn(cube) for cube in cubes])
-
-        # Create a VGroup of all cubes and arrange them
-        cube_group = VGroup(*cubes)
         
         # # First animation - rotations
         # rotations = []
