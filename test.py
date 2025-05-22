@@ -219,31 +219,31 @@ class TorusPlot(InteractiveScene):
 
         self.play(*[FadeIn(cube) for cube in cubes])
         
-        # # First animation - rotations
-        # rotations = []
-        # for i, cube in enumerate(cubes):
-        #     if i % 3 == 0:
-        #         rotations.append(Rotate(cube, PI, axis=RIGHT))
-        #     elif i % 3 == 1:
-        #         rotations.append(Rotate(cube, PI, axis=UP))
-        #     else:
-        #         rotations.append(Rotate(cube, PI, axis=OUT))
+        # # # First animation - rotations
+        # # rotations = []
+        # # for i, cube in enumerate(cubes):
+        # #     if i % 3 == 0:
+        # #         rotations.append(Rotate(cube, PI, axis=RIGHT))
+        # #     elif i % 3 == 1:
+        # #         rotations.append(Rotate(cube, PI, axis=UP))
+        # #     else:
+        # #         rotations.append(Rotate(cube, PI, axis=OUT))
 
-        # self.play(*rotations, run_time=2)
-        # self.play(*rotations, run_time=2)
+        # # self.play(*rotations, run_time=2)
+        # # self.play(*rotations, run_time=2)
 
-        # Mirror the cubes
-        vertices_to_fade_out = []
-        vertices_to_fade_in = []
-        for cube in cubes:
-            mirror_idx = {0, 1, 2, 3, 4, 5, 6, 7} - set(cube.vertex_idx)
-            v = cube.clear_vertices(animation=True)
-            vertices_to_fade_out.extend(v)
-            v = cube.add_vertices(mirror_idx, animation=True)
-            vertices_to_fade_in.extend(v)
+        # # Mirror the cubes
+        # vertices_to_fade_out = []
+        # vertices_to_fade_in = []
+        # for cube in cubes:
+        #     mirror_idx = {0, 1, 2, 3, 4, 5, 6, 7} - set(cube.vertex_idx)
+        #     v = cube.clear_vertices(animation=True)
+        #     vertices_to_fade_out.extend(v)
+        #     v = cube.add_vertices(mirror_idx, animation=True)
+        #     vertices_to_fade_in.extend(v)
 
-        self.play(*[FadeOut(dot) for dot in vertices_to_fade_out])
-        self.play(*[FadeIn(dot) for dot in vertices_to_fade_in])
+        # self.play(*[FadeOut(dot) for dot in vertices_to_fade_out])
+        # self.play(*[FadeIn(dot) for dot in vertices_to_fade_in])
 
         # Create target arrangement
         target_group = Group(*cubes).copy()
