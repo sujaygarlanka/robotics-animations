@@ -150,7 +150,7 @@ class TorusPlot(InteractiveScene):
 
         self.lookup_table = self.create_lookup_table()
         self._animate_different_corners()
-        self._show_base_cases()
+        # self._show_base_cases()
         
 
         # Sphere
