@@ -71,10 +71,10 @@ class Cube(Group):
     def clear_vertices(self, animation=False):
         # Clear previous vertices
         if animation:
-            self.
+            self.vertices = []
         else:
-        for dot in self.vertices:
-            self.remove(dot)
+            for dot in self.vertices:
+                self.scene.remove(dot)
             self.vertices = []
             self.vertex_idx = []
 
