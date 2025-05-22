@@ -207,14 +207,6 @@ class TorusPlot(InteractiveScene):
 
         self.play(FadeIn(*cubes))
 
-        # Define updater functions for different rotations
-        def rotate_x(mob, dt):
-            mob.rotate(PI/4 * dt, axis=RIGHT)
-        def rotate_y(mob, dt):
-            mob.rotate(PI/4 * dt, axis=UP) 
-        def rotate_z(mob, dt):
-            mob.rotate(PI/4 * dt, axis=OUT)
-
         rotations = []
         # Assign different rotations to cubes
         for i, cube in enumerate(cubes):
