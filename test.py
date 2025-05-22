@@ -77,7 +77,7 @@ class Cube(Group):
         self.vertices = []
         self.vertex_idx = []
 
-    def add_vertices(self, vertex_idx, animation=None):
+    def add_vertices(self, vertex_idx, animation=False):
         self.vertex_idx = vertex_idx
 
         # Visualize corners
@@ -88,7 +88,8 @@ class Cube(Group):
             # Get the rotation frame of the group
             dot.move_to(np.array(so3.apply(self.rotation_matrix, pos)) * self.scale_val)
             self.vertices.append(dot)
-            # self.add(dot)
+            if not animation:
+                self.add(dot)
 
         # if animation is not None:
         #     self.scene.play(*[animation(dot) for dot in self.vertices])
