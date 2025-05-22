@@ -195,6 +195,7 @@ class TorusPlot(InteractiveScene):
         cols = 5
         spacing = 1.5
 
+        cubes = []
         # Arrange manually
         for i, cube in enumerate(self.lookup_table):
             row = i // cols
@@ -202,10 +203,9 @@ class TorusPlot(InteractiveScene):
             x = (col - (cols - 1)/2) * spacing
             z = - (row - (rows - 1)/2) * spacing
             cube.move_to(np.array([x, 0, z]))
-            self.add(cube)
+            cubes.append(cube)
 
-        # Add all dots to the scene
-        # self.add(cube)
+        self.play(FadeIn(*cubes))
 
         self.wait(1)
     
