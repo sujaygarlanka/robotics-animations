@@ -236,7 +236,7 @@ class TorusPlot(InteractiveScene):
         vertices_to_fade_out = []
         vertices_to_fade_in = []
         for cube in cubes:
-            mirror_idx = set(0, 1, 2, 3, 4, 5, 6, 7) - set(cube.vertex_idx)
+            mirror_idx = {0, 1, 2, 3, 4, 5, 6, 7} - set(cube.vertex_idx)
             v = cube.clear_vertices(animation=True)
             vertices_to_fade_out.extend(v)
             v = cube.add_vertices(mirror_idx, animation=True)
