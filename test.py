@@ -121,7 +121,6 @@ class Cube(Group):
         self.rotation_matrix = so3.mul(R, self.rotation_matrix)
 
     def scale(self, scale):
-        s
         self.scale_val = scale
         for edge in self.edges:
             edge.set_stroke_width(1.0 * self.scale_val)
