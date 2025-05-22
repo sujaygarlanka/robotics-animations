@@ -159,7 +159,8 @@ class TorusPlot(InteractiveScene):
 
 
     def _animate_different_corners(self):
-        cube = Cube(self, scale=3.0)
+        cube = Cube(self)
+        cube.scale(3.0)
         self.add(cube)
 
         # Define an updater function
