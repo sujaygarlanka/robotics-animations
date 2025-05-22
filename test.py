@@ -215,9 +215,11 @@ class TorusPlot(InteractiveScene):
 
         self.play(*[FadeIn(cube) for cube in cubes])
 
-
+        # Create a VGroup of all cubes and arrange them
+        cube_group = VGroup(*cubes)
+        
+        # First animation - rotations
         rotations = []
-        # Assign different rotations to cubes
         for i, cube in enumerate(cubes):
             if i % 3 == 0:
                 rotations.append(Rotate(cube, PI, axis=RIGHT))
@@ -229,24 +231,22 @@ class TorusPlot(InteractiveScene):
         self.play(*rotations, run_time=2)
         self.play(*rotations, run_time=2)
 
-        # Move cubes to top in a line
-        top_z = 3  # Position at top of screen
-        spacing = 1.0  # Reduced spacing for smaller cubes
-        new_scale = 0.4  # Scale down the cubes
+        # Create target arrangement
+        target_group = VGroup(*cubes).copy()
+        target_group.arrange(
+            direction=RIGHT,
+            buff=1.0  # spacing between cubes
+        ).scale(0.4)  # scale down the entire group
+        target_group.move_to([0, 0, 3])  # move to top of screen
         
-        animations = []
-        for i, cube in enumerate(cubes):
-            # Calculate x position in line
-            x = (i - (len(cubes)-1)/2) * spacing
-            # Create animation to move and scale
-            animations.append(
-                AnimationGroup(
-                    cube.animate.move_to(np.array([x, 0, top_z])),
-                    cube.animate.scale(new_scale)
-                )
-            )
-            
-        self.play(*animations, run_time=2)
+        # Animate each cube to its target position
+        self.play(
+            *[
+                Transform(cube, target)
+                for cube, target in zip(cubes, target_group)
+            ],
+            run_time=2
+        )
 
         self.wait(1)
     
