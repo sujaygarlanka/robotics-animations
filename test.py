@@ -52,11 +52,11 @@ class Cube(Group):
         self.rotation_matrix = so3.identity()
 
         self.triangles = []
-        self.create_cube()
+        self._create_cube()
         self.add_vertices(vertex_idx)
         self.add_triangles(triangles)
 
-    def create_cube(self):
+    def _create_cube(self):
         # Draw cube edges
         for i, j in Cube.CUBE_EDGES:
             edge = Line(
