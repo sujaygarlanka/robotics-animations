@@ -100,6 +100,8 @@ class Cube(Group):
         return self.vertices
 
     def add_triangles(self, triangles):
+        self.triangles_idx = triangles.copy()
+        
         for t in triangles:
             triangle_points = []
             for edge in t:
