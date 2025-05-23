@@ -52,6 +52,7 @@ class Cube(Group):
         self.rotation_matrix = so3.identity()
 
         self.triangles = []
+        self.triangles_idx = []
         self._create_cube()
         self.add_vertices(vertex_idx)
         self.add_triangles(triangles)
