@@ -136,6 +136,20 @@ class Cube(Group):
     def _scale(self, scale):
         self.scale_val *= scale
         
+    def copy(self):
+        # Create a new cube with the same parameters
+        new_cube = Cube(
+            self.scene,
+            scale=self.scale_val,
+            vertex_idx=self.vertex_idx.copy() if isinstance(self.vertex_idx, np.ndarray) else list(self.vertex_idx),
+            triangles=self.triangles.copy() if isinstance(self.triangles, np.ndarray) else list(self.triangles)
+        )
+        # Copy the rotation matrix
+        new_cube.rotation_matrix = np.copy(self.rotation_matrix)
+        # Copy the transform state from parent class
+        new_cube.become(self)
+        return new_cube
+
 class TorusPlot(InteractiveScene):
     def construct(self):
         # Animation script
