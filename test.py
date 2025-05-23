@@ -271,7 +271,7 @@ class TorusPlot(InteractiveScene):
             cube._scale(0.4)
 
         # Create and animate a large centered copy of the first cube
-        large_cube = copy.deepcopy(cubes[0])
+        large_cube = (cubes[0]).copy()
         self.play(
             large_cube.animate.scale(5).move_to(ORIGIN),
             run_time=1.5
