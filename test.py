@@ -142,14 +142,11 @@ class Cube(Group):
             self.scene,
             scale=self.scale_val,
         )
+        new_cube.move_to(self.get_center())
 
-        # Copy all parameters
-        new_cube.vertex_idx = self.vertex_idx.copy()
-        new_cube.triangles = self.triangles.copy()
+        new_cube.add_vertices(self.vertex_idx)
         new_cube.rotation_matrix = np.copy(self.rotation_matrix)
-        new_cube.edges = self.edges.copy()
-        # Copy the transform state from parent class
-        new_cube.become(self)
+
         return new_cube
 
 class TorusPlot(InteractiveScene):
