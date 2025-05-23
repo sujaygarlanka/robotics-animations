@@ -83,7 +83,7 @@ class Cube(Group):
             self.vertex_idx = []
 
     def add_vertices(self, vertex_idx, animation=False):
-        self.vertex_idx = vertex_idx
+        self.vertex_idx = vertex_idx.copy()
 
         # Visualize corners
         for idx, pos in enumerate(Cube.CUBE_VERTICES):
@@ -141,11 +141,13 @@ class Cube(Group):
         new_cube = Cube(
             self.scene,
             scale=self.scale_val,
-            vertex_idx=self.vertex_idx.copy() if isinstance(self.vertex_idx, np.ndarray) else list(self.vertex_idx),
-            triangles=self.triangles.copy() if isinstance(self.triangles, np.ndarray) else list(self.triangles)
         )
-        # Copy the rotation matrix
+
+        # Copy all parameters
+        new_cube.vertex_idx = self.vertex_idx.copy()
+        new_cube.triangles = self.triangles.copy()
         new_cube.rotation_matrix = np.copy(self.rotation_matrix)
+        new_cube.edges = self.edges.copy()
         # Copy the transform state from parent class
         new_cube.become(self)
         return new_cube
