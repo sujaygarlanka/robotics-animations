@@ -139,18 +139,18 @@ class Cube(Group):
     def _scale(self, scale):
         self.scale_val *= scale
         
-    # def copy(self):
-    #     # Create a new cube with the same parameters
-    #     new_cube = Cube(
-    #         self.scene,
-    #         scale=self.scale_val,
-    #     )
-    #     new_cube.move_to(self.get_center())
-    #     new_cube.add_vertices(self.vertex_idx)
-    #     new_cube.add_triangles(self.triangles_idx)
-    #     new_cube.rotation_matrix = np.copy(self.rotation_matrix)
+    def copy(self):
+        # Create a new cube with the same parameters
+        new_cube = Cube(
+            self.scene,
+            scale=self.scale_val,
+        )
+        new_cube.move_to(self.get_center())
+        new_cube.add_vertices(self.vertex_idx)
+        new_cube.add_triangles(self.triangles_idx)
+        new_cube.rotation_matrix = np.copy(self.rotation_matrix)
 
-    #     return new_cube
+        return new_cube
 
 class TorusPlot(InteractiveScene):
     def construct(self):
