@@ -145,9 +145,9 @@ class Cube(Group):
             self.scene,
             scale=self.scale_val,
         )
-        new_cube.move_to(self.get_center())
         new_cube.add_vertices(self.vertex_idx)
         new_cube.add_triangles(self.triangles_idx)
+        new_cube.move_to(self.get_center())
         new_cube.rotation_matrix = np.copy(self.rotation_matrix)
 
         return new_cube
