@@ -149,6 +149,7 @@ class Cube(Group):
         new_cube.add_triangles(self.triangles_idx)
         new_cube.move_to(self.get_center())
         new_cube.rotation_matrix = np.copy(self.rotation_matrix)
+        self.scene.add(new_cube)
 
         return new_cube
 
