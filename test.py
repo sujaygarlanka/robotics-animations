@@ -146,7 +146,7 @@ class Cube(Group):
             scale=self.scale_val,
         )
         new_cube.rotation_matrix = self.rotation_matrix.copy()
-        print(self.vertex_idx)
+        print(new_cube.rotation_matrix)
         new_cube.add_vertices(self.vertex_idx)
         new_cube.add_triangles(self.triangles_idx)
         new_cube.move_to(self.get_center())
