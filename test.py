@@ -139,7 +139,7 @@ class Cube(Group):
     def _scale(self, scale):
         self.scale_val *= scale
         
-    def _copy(self):
+    def custom_copy(self):
         # Create a new cube with the same parameters
         new_cube = Cube(
             self.scene,
