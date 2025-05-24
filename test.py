@@ -141,7 +141,10 @@ class Cube(Group):
         
     def copy(self):
         # Create a new cube with the same parameters
-        new_cube = super().copy(deep=True)
+        new_cube = Cube(
+            self.scene,
+            scale=self.scale_val,
+        )
         new_cube.move_to(self.get_center())
         new_cube.add_vertices(self.vertex_idx)
         new_cube.add_triangles(self.triangles_idx)
